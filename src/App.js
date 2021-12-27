@@ -12,7 +12,9 @@ class App extends Component {
           <MenuNav />
 
           {/* Content (dynamic) */}
-          {routes}
+          <div className="row">
+            <div className="col-12">{routes}</div>
+          </div>
         </div>
       </div>
     )

@@ -27,7 +27,6 @@ class LoginForm extends Component {
         console.log(res);
         this.props.history.push(this.props.location.state.from)
     })
-
   }
 
   render() {

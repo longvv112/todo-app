@@ -1,10 +1,14 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { Navbar, Nav, NavItem } from "reactstrap"
+import { authContext } from "../../context/AuthContext"
+import UserInfo from "../UserInfo/UserInfo"
 import "./MenuNav.css"
 
 class MenuNav extends Component {
   render() {
+    const {authed} = this.context
+
     return (
       <div>
         <Navbar color="light" expand="md" light>
@@ -26,11 +30,16 @@ class MenuNav extends Component {
                 About
               </Link>
             </NavItem>
+            <NavItem>
+              <UserInfo authed={authed} />
+            </NavItem>
           </Nav>
         </Navbar>
       </div>
     )
   }
 }
+
+MenuNav.contextType = authContext
 
 export default MenuNav
