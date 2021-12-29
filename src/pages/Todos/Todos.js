@@ -18,26 +18,38 @@ class Todos extends Component {
   }
 
   componentWillUnmount() {
-      console.log("unmounted");
+    console.log("unmounted")
   }
 
   fetchTodosList = () => {
     this.setState({ loading: true })
 
-    TodosService.getTodosList().then((response) => {
-      this.setState({ todos: response, loading: false })
+    TodosService.getTodosList().then((data) => {
+      this.setState({ todos: data, loading: false })
     })
   }
 
   handleAddTodo = (title) => {
-    TodosService.addTodo(title).then(response => {
-        const newTodos = [...this.state.todos, response]
-        this.setState({todos: newTodos});
+    TodosService.addTodo(title).then((response) => {
+      const newTodos = [...this.state.todos, response]
+      this.setState({ todos: newTodos })
     })
   }
 
   handleRemoveTodo = (todoId) => {
-      // update code here
+    // update code here
+    const remainTodos = this.state.todos.filter((todo) => todo.id !== todoId)
+    this.setState({ todos: remainTodos })
+  }
+
+  handleChangeCompleted = (todoId) => {
+    const newTodos = this.state.todos.map((todo) => {
+      if (todo.id !== todoId) return todo
+
+      return { ...todo, is_completed: !todo.is_completed }
+    })
+
+    this.setState({ todos: newTodos })
   }
 
   render() {
@@ -46,14 +58,21 @@ class Todos extends Component {
     return (
       <div>
         <h1>Todos</h1>
-        <TodoForm onAddTodo={this.handleAddTodo}  />
+        <TodoForm onAddTodo={this.handleAddTodo} />
 
         {loading ? (
           <div>Loading...</div>
         ) : (
           <ul>
             {todos.map((todo) => {
-              return <TodoItem key={todo.id} todo={todo} />
+              return (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onRemoveTodo={this.handleRemoveTodo}
+                  onChangeCompleted={this.handleChangeCompleted}
+                />
+              )
             })}
           </ul>
         )}
