@@ -24,8 +24,8 @@ class Todos extends Component {
   fetchTodosList = () => {
     this.setState({ loading: true })
 
-    TodosService.getTodosList().then((response) => {
-      this.setState({ todos: response, loading: false })
+    TodosService.getTodosList().then((data) => {
+      this.setState({ todos: data, loading: false })
     })
   }
 
@@ -33,7 +33,7 @@ class Todos extends Component {
     TodosService.addTodo(title).then(response => {
         const newTodos = [...this.state.todos, response]
         this.setState({todos: newTodos});
-    })
+    }).catch(error => {console.log(error);})
   }
 
   handleRemoveTodo = (todoId) => {

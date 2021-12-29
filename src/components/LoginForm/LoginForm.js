@@ -23,10 +23,7 @@ class LoginForm extends Component {
     // validate form
 
     const {login} = this.context
-    login().then(res => {
-        console.log(res);
-        this.props.history.push(this.props.location.state.from)
-    })
+    login()
   }
 
   render() {
