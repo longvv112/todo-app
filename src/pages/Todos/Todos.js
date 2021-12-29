@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import TodoForm from "../../components/TodoForm/TodoForm"
 import TodoItem from "../../components/TodoItem/TodoItem"
+import TodoItems from "../../components/TodoItems/TodoItems"
 import { TodosService } from "../../services/todos"
 
 class Todos extends Component {
@@ -21,12 +22,11 @@ class Todos extends Component {
     console.log("unmounted")
   }
 
-  fetchTodosList = () => {
+  fetchTodosList = async () => {
     this.setState({ loading: true })
 
-    TodosService.getTodosList().then((data) => {
-      this.setState({ todos: data, loading: false })
-    })
+    const data = await TodosService.getTodosList()
+    this.setState({ todos: data, loading: false })
   }
 
   handleAddTodo = (title) => {
@@ -38,8 +38,10 @@ class Todos extends Component {
 
   handleRemoveTodo = (todoId) => {
     // update code here
-    const remainTodos = this.state.todos.filter((todo) => todo.id !== todoId)
-    this.setState({ todos: remainTodos })
+    TodosService.removeTodo(todoId).then(() => {
+      const remainTodos = this.state.todos.filter((todo) => todo.id !== todoId)
+      this.setState({ todos: remainTodos })
+    })
   }
 
   handleChangeCompleted = (todoId) => {
@@ -60,22 +62,12 @@ class Todos extends Component {
         <h1>Todos</h1>
         <TodoForm onAddTodo={this.handleAddTodo} />
 
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <ul>
-            {todos.map((todo) => {
-              return (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  onRemoveTodo={this.handleRemoveTodo}
-                  onChangeCompleted={this.handleChangeCompleted}
-                />
-              )
-            })}
-          </ul>
-        )}
+        <TodoItems
+          loading={loading}
+          todos={todos}
+          onRemoveTodo={this.handleRemoveTodo}
+          onChangeCompleted={this.handleChangeCompleted}
+        />
       </div>
     )
   }

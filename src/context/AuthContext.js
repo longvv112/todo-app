@@ -1,25 +1,30 @@
 import React from "react"
+import { withRouter } from "react-router-dom"
+import { AuthServices } from "../services/auth"
 
 export const authContext = React.createContext()
 
-export class AuthProvider extends React.Component {
+class AuthProvider extends React.Component {
   constructor(params) {
     super(params)
 
     this.state = {
-      authed: false,
+      authed: Boolean(AuthServices.getToken()),
     }
   }
 
-  login = () => {
-    // call api authorize
-    return new Promise((resolve) => {
-      this.setState({ authed: true })
-      resolve("Login successfully!")
+  login = (email, password) => {
+    AuthServices.login(email, password).then((response) => {
+      this.setState({authed: true});
+      AuthServices.setToken(response.token)
+
+      const {history, location} = this.props
+      history.push(location.state.from)
     })
   }
 
   logout = () => {
+    // todo
     return new Promise((resolve) => {
       this.setState({ authed: false })
       resolve("Logout successfully!")
@@ -40,3 +45,7 @@ export class AuthProvider extends React.Component {
     )
   }
 }
+
+const AuthProviderWithRoute = withRouter(AuthProvider)
+
+export {AuthProviderWithRoute as AuthProvider}

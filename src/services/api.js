@@ -12,5 +12,7 @@ export const api = (method, endpoint, payload) => {
     (response) => {
       return response.data
     }
-  )
+  ).catch(error => {
+      console.log(error);
+  })
 }
