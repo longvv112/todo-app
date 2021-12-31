@@ -7,7 +7,7 @@ export const authContext = React.createContext()
 class AuthProvider extends React.Component {
   constructor(params) {
     super(params)
-
+    console.log(Boolean(AuthServices.getToken()));
     this.state = {
       authed: Boolean(AuthServices.getToken()),
     }
