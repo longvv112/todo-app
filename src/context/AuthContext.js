@@ -9,7 +9,7 @@ class AuthProvider extends React.Component {
     super(params)
 
     this.state = {
-      authed: Boolean(AuthServices.getToken()),
+      authed: Boolean(AuthServices.getToken())
     }
   }
 
@@ -19,15 +19,18 @@ class AuthProvider extends React.Component {
       AuthServices.setToken(response.token)
 
       const {history, location} = this.props
-      history.push(location.state.from)
+
+      history.push(location.state ? location.state.from : "/")
     })
   }
 
   logout = () => {
-    // todo
-    return new Promise((resolve) => {
-      this.setState({ authed: false })
-      resolve("Logout successfully!")
+    AuthServices.logout().then((response) => {
+      this.setState({authed: false});
+      AuthServices.removeToken()
+
+      const {history} = this.props
+      history.push("/")
     })
   }
 
@@ -36,7 +39,7 @@ class AuthProvider extends React.Component {
       <authContext.Provider
         value={{
           login: this.login,
-          logut: this.logout,
+          logout: this.logout,
           authed: this.state.authed,
         }}
       >

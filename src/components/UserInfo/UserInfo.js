@@ -1,27 +1,18 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class UserInfo extends Component {
-    constructor(params) {
-        super(params)
 
-        this.state = {
-            user: null
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.authed && this.state.user === null) { // user logged in
-            // call api get user info
-            this.setState({user: {name: "longvv", email: "longvv112@gmail.com"}});
-        }
+    handleClickLogout = () => {
+        this.props.logout()
     }
 
     render() {
-        const {user} = this.state
-        if (!user) return null
+        const {authed} = this.props
+        if (!authed) return <Link to="/login" className='nav-link'>Login</Link>
 
         return (
-            <div className='nav-link'>{user.name}</div>
+            <div className='nav-link'>longvv | <span onClick={this.handleClickLogout}>Logout</span></div>
         );
     }
 }

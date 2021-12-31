@@ -20,7 +20,11 @@ const login = (email, password) => {
 }
 
 const logout = () => {
-    // todo
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(true)
+        }, 1000)
+    })
 }
 
 export const AuthServices = {

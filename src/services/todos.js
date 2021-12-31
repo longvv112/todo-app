@@ -12,8 +12,13 @@ const removeTodo = (todoId) => {
     return api("DELETE", `/todos/${todoId}`)
 }
 
+const getTodo = (todoId) => {
+    return api("GET", `/todos/${todoId}`)
+}
+
 export const TodosService = {
     getTodosList,
     addTodo,
-    removeTodo
+    removeTodo,
+    getTodo
 }

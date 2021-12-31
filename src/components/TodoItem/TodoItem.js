@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom"
 import { Input } from "reactstrap"
 
 class TodoItem extends Component {
@@ -25,7 +26,9 @@ class TodoItem extends Component {
               onChange={this.handChange}
             />
           </div>
-          <div className="col">{todo.title}</div>
+          <div className="col">
+            <Link to={`/todos/${todo.id}`}>{todo.title}</Link>
+          </div>
           <div className="col-auto" onClick={this.handleClick}>
             Remove
           </div>

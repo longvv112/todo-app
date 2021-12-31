@@ -18,6 +18,10 @@ class Todos extends Component {
     this.fetchTodosList()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    
+  }
+
   componentWillUnmount() {
     console.log("unmounted")
   }
