@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-import { Input } from "reactstrap"
+import { Button, Input } from "reactstrap"
 
 class TodoItem extends Component {
   handleClick = (e) => {
@@ -17,8 +17,8 @@ class TodoItem extends Component {
     const { todo } = this.props
 
     return (
-      <li>
-        <div className="row">
+      <li className="list-group-item list-group-item-action">
+        <div className="row align-items-center">
           <div className="col-auto">
             <Input
               type="checkbox"
@@ -29,8 +29,8 @@ class TodoItem extends Component {
           <div className="col">
             <Link to={`/todos/${todo.id}`}>{todo.title}</Link>
           </div>
-          <div className="col-auto" onClick={this.handleClick}>
-            Remove
+          <div className="col-auto">
+            <button className="btn text-danger" onClick={this.handleClick}>Remove</button>
           </div>
         </div>
       </li>

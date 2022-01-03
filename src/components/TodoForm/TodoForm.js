@@ -29,19 +29,23 @@ class TodoForm extends Component {
     const { title } = this.state
 
     return (
-      <div>
+      <div className="mb-4">
         <Form onSubmit={this.handleSubmitForm}>
-          <div className="d-flex">
-            <div className="flex-grow-1">
+          <div className="row">
+            <div className="col">
               <Input
                 id="inputTodo"
                 value={title}
                 onChange={this.handleChangeInput}
+                placeholder="New task..."
               />
             </div>
-            <Button color="primary" className="ml-3">
-              Add
-            </Button>
+
+            <div className="col-auto">
+              <Button color="primary" className="ml-3">
+                Add
+              </Button>
+            </div>
           </div>
         </Form>
       </div>

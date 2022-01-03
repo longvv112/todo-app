@@ -9,7 +9,7 @@ const MenuNav = () => {
   const { authed, logout } = useContext(authContext)
 
   return (
-    <div>
+    <header className="mb-4">
       <Navbar color="light" expand="md" light>
         <Link to="/" className="navbar-brand">
           Rocket 18
@@ -36,7 +36,7 @@ const MenuNav = () => {
           </NavItem>
         </Nav>
       </Navbar>
-    </div>
+    </header>
   )
 }
 

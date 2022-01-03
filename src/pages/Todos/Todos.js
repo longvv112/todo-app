@@ -18,9 +18,7 @@ class Todos extends Component {
     this.fetchTodosList()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    
-  }
+  componentDidUpdate(prevProps, prevState) {}
 
   componentWillUnmount() {
     console.log("unmounted")
@@ -64,14 +62,21 @@ class Todos extends Component {
     return (
       <div>
         <h1>Todos</h1>
-        <TodoForm onAddTodo={this.handleAddTodo} />
 
-        <TodoItems
-          loading={loading}
-          todos={todos}
-          onRemoveTodo={this.handleRemoveTodo}
-          onChangeCompleted={this.handleChangeCompleted}
-        />
+        <section>
+          <div className="row ">
+            <div className="col-12 col-md-6 mx-auto">
+              <TodoForm onAddTodo={this.handleAddTodo} />
+
+              <TodoItems
+                loading={loading}
+                todos={todos}
+                onRemoveTodo={this.handleRemoveTodo}
+                onChangeCompleted={this.handleChangeCompleted}
+              />
+            </div>
+          </div>
+        </section>
       </div>
     )
   }

@@ -1,20 +1,27 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
 
 class UserInfo extends Component {
+  handleClickLogout = () => {
+    this.props.logout()
+  }
 
-    handleClickLogout = () => {
-        this.props.logout()
-    }
+  render() {
+    const { authed } = this.props
+    if (!authed)
+      return (
+        <Link to="/login" className="nav-link">
+          Login
+        </Link>
+      )
 
-    render() {
-        const {authed} = this.props
-        if (!authed) return <Link to="/login" className='nav-link'>Login</Link>
-
-        return (
-            <div className='nav-link'>longvv | <span onClick={this.handleClickLogout}>Logout</span></div>
-        );
-    }
+    return (
+      <div className="nav-link">
+        longvv <div class="vr align-middle mx-2" />{" "}
+        <span onClick={this.handleClickLogout}>Logout</span>
+      </div>
+    )
+  }
 }
 
-export default UserInfo;
+export default UserInfo
