@@ -8,6 +8,14 @@ const todosReducer = (state = initialTodos, action) => {
             return [...state, newTodo]
         }
 
+        case "GET_TODO": {
+
+        }
+
+        case "REMOVE_TODO": {
+            
+        }
+
 
         default:
             return state

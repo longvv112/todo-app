@@ -1,14 +1,13 @@
 import React from "react"
 import { Nav, NavItem, NavLink } from "reactstrap"
 import { TodoFilterActions } from "../../redux/actions/todoFilter"
-import { TodoFilterSelectors } from "../../redux/selectors/todoFilter"
-import store from "../../redux/store"
+import { connect } from "react-redux"
 
-const TodoFilter = () => {
-  const activeStatus = TodoFilterSelectors.getActiveStatus()
+const TodoFilter = (props) => {
+  const activeStatus = props.todoFilter
 
   const handClick = (status) => {
-    store.dispatch(TodoFilterActions.changeFilter(status))
+    props.dispatchChangeFilter(status)
   }
 
   return (
@@ -46,4 +45,18 @@ const TodoFilter = () => {
   )
 }
 
-export default TodoFilter
+const mapStateToProps = (store) => {
+  return {
+    todoFilter: store.todo_filter,
+    dispatch: store.dispatch,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchChangeFilter: (status) =>
+      dispatch(TodoFilterActions.changeFilter(status)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoFilter)
