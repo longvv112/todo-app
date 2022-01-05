@@ -22,7 +22,11 @@ class TodoForm extends Component {
     event.preventDefault()
 
     const { onAddTodo } = this.props
-    onAddTodo(this.state.title)
+    onAddTodo(this.state.title, this.clearTitle)
+  }
+
+  clearTitle = () => {
+    this.setState({title: ""});
   }
 
   render() {

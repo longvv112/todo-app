@@ -16,9 +16,14 @@ const getTodo = (todoId) => {
     return api("GET", `/todos/${todoId}`)
 }
 
+const changeCompleted = (todoId, value) => {
+    return api("PUT", `/todos/${todoId}`, {is_completed: value})
+}
+
 export const TodosService = {
     getTodosList,
     addTodo,
     removeTodo,
-    getTodo
+    getTodo,
+    changeCompleted
 }

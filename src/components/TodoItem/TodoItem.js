@@ -10,7 +10,7 @@ class TodoItem extends Component {
 
   handChange = (event) => {
     const { onChangeCompleted, todo } = this.props
-    onChangeCompleted(todo.id)
+    onChangeCompleted(todo.id, event.target.checked)
   }
 
   render() {
