@@ -1,6 +1,6 @@
 import React, { Component } from "react"
+import TodoFilter from "../../components/TodoFilter/TodoFilter"
 import TodoForm from "../../components/TodoForm/TodoForm"
-import TodoItem from "../../components/TodoItem/TodoItem"
 import TodoItems from "../../components/TodoItems/TodoItems"
 import { TodosService } from "../../services/todos"
 
@@ -62,11 +62,12 @@ class Todos extends Component {
     return (
       <div>
         <h1>Todos</h1>
-
         <section>
           <div className="row ">
             <div className="col-12 col-md-6 mx-auto">
               <TodoForm onAddTodo={this.handleAddTodo} />
+
+              <TodoFilter />
 
               <TodoItems
                 loading={loading}
