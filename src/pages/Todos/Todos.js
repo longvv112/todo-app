@@ -29,10 +29,7 @@ class Todos extends Component {
 
   fetchTodosList = async () => {
     this.setState({ loading: true })
-
-    const data = await TodosService.getTodosList()
-
-    this.props.dispatchGetTodos(data)
+    await this.props.dispatchGetTodosAsync()
     this.setState({ loading: false })
   }
 
@@ -122,7 +119,8 @@ const mapDispatchToProps = (dispatch) => {
     dispatchGetTodos: (todos) => dispatch(TodosActions.getTodos(todos)),
     dispatchAddTodo: (todo) => dispatch(TodosActions.addTodo(todo)),
     dispatchRemoveTodo: (todoId) => dispatch(TodosActions.removeTodo(todoId)),
-    dispatchChangeCompleted: (todoId, isCompleted) => dispatch(TodosActions.changeTodoCompleted(todoId, isCompleted))
+    dispatchChangeCompleted: (todoId, isCompleted) => dispatch(TodosActions.changeTodoCompleted(todoId, isCompleted)),
+    dispatchGetTodosAsync: () => dispatch(TodosActions.getTodosAsync())
   }
 }
 
