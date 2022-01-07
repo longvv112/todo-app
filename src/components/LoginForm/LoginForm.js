@@ -1,6 +1,9 @@
+import { Formik, Form as FormikForm, Field } from "formik"
 import React, { Component } from "react"
 import { Form, FormGroup, Label, Input, Button } from "reactstrap"
+import { ReactstrapInput } from "reactstrap-formik"
 import { authContext } from "../../context/AuthContext"
+import * as Yup from "yup"
 
 class LoginForm extends Component {
   constructor(params) {
@@ -22,17 +25,16 @@ class LoginForm extends Component {
 
     // validate form
 
-    const {login} = this.context
+    const { login } = this.context
     login()
   }
 
   render() {
     // const {authed, login} = this.context
 
-
     return (
       <div>
-        <Form onSubmit={this.handleSubmit}>
+        {/* <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Label for="exampleEmail">Username</Label>
             <Input
@@ -57,7 +59,45 @@ class LoginForm extends Component {
           </FormGroup>
 
           <Button type="submit">Submit</Button>
-        </Form>
+        </Form> */}
+
+        <Formik
+          initialValues={{
+            username: "",
+            password: "",
+          }}
+          onSubmit={(fields) => {
+            console.log(fields);
+
+            this.context.login()
+          }}
+          validationSchema={Yup.object().shape({
+            username: Yup.string().required("Username is required."),
+            password: Yup.string().required("Password is required.").min(6, "Password must be at least 6 charactors.")
+          })}
+        >
+          {
+            () => {
+              return (
+                <FormikForm>
+                  <Field
+                    type="text"
+                    label="Username"
+                    name="username"
+                    component={ReactstrapInput}
+                  />
+                  <Field
+                    type="password"
+                    label="Password"
+                    name="password"
+                    component={ReactstrapInput}
+                  />
+                  <Button type="submit" color="primary" className="mt-3">Submit</Button>
+                </FormikForm>
+              )
+            }
+          }
+        </Formik>
       </div>
     )
   }
