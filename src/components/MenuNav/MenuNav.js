@@ -1,5 +1,5 @@
 import React, { Component, useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { Navbar, Nav, NavItem } from "reactstrap"
 import { authContext } from "../../context/AuthContext"
 import UserInfo from "../UserInfo/UserInfo"
@@ -17,19 +17,19 @@ const MenuNav = () => {
 
         <Nav navbar>
           <NavItem>
-            <Link to="/" className="nav-link">
+            <NavLink exact to="/" className="nav-link">
               Home
-            </Link>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <Link to="/todos" className="nav-link">
+            <NavLink exact to="/todos" className="nav-link">
               Todos
-            </Link>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <Link to="/about" className="nav-link">
+            <NavLink exact to="/about" className="nav-link">
               About
-            </Link>
+            </NavLink>
           </NavItem>
           <NavItem>
             <UserInfo authed={authed} logout={logout} />

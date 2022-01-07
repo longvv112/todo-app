@@ -20,10 +20,15 @@ const changeCompleted = (todoId, value) => {
     return api("PUT", `/todos/${todoId}`, {is_completed: value})
 }
 
+const changeTitle = (todoId, value) => {
+    return api("PUT", `/todos/${todoId}`, {title: value})
+}
+
 export const TodosService = {
     getTodosList,
     addTodo,
     removeTodo,
     getTodo,
-    changeCompleted
+    changeCompleted,
+    changeTitle
 }

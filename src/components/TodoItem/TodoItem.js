@@ -1,8 +1,19 @@
 import React, { Component } from "react"
+import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-import { Button, Input } from "reactstrap"
+import { Form, Input } from "reactstrap"
+import { TodosActions } from "../../redux/actions/todos"
 
 class TodoItem extends Component {
+  constructor(params) {
+    super(params)
+
+    this.state = {
+      editing: false,
+      title: this.props.todo.title,
+    }
+  }
+
   handleClick = (e) => {
     const { onRemoveTodo, todo } = this.props
     onRemoveTodo(todo.id)
@@ -13,8 +24,26 @@ class TodoItem extends Component {
     onChangeCompleted(todo.id, event.target.checked)
   }
 
+  toggleEditing = () => {
+    this.setState({ editing: !this.state.editing })
+  }
+
+  handleChangeTitle = (event) => {
+    this.setState({ title: event.target.value })
+  }
+
+  handleSubmitTitle = (event) => {
+    event.preventDefault()
+
+    const {dispatch, todo} = this.props
+    dispatch(TodosActions.changeTodoTitleAsync(todo.id, this.state.title)).then(() => {
+      this.setState({editing: false});
+    })
+  }
+
   render() {
     const { todo } = this.props
+    const { title, editing } = this.state
 
     return (
       <li className="list-group-item list-group-item-action">
@@ -27,10 +56,19 @@ class TodoItem extends Component {
             />
           </div>
           <div className="col">
-            <Link to={`/todos/${todo.id}`}>{todo.title}</Link>
+            {editing ? (
+              <Form onSubmit={this.handleSubmitTitle}>
+                <Input value={title} onChange={this.handleChangeTitle} autoFocus />
+              </Form>
+            ) : (
+              <Link to={`/todos/${todo.id}`}>{todo.title}</Link>
+            )}
           </div>
           <div className="col-auto">
-            <button className="btn text-danger" onClick={this.handleClick}>Remove</button>
+            <button className="btn text-secondary me-2" onClick={this.toggleEditing}>Edit</button>
+            <button className="btn text-danger" onClick={this.handleClick}>
+              Remove
+            </button>
           </div>
         </div>
       </li>
@@ -38,4 +76,4 @@ class TodoItem extends Component {
   }
 }
 
-export default TodoItem
+export default connect()(TodoItem)

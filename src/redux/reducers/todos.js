@@ -26,7 +26,17 @@ const todosReducer = (state = initialTodos, action) => {
                 }
             })
 
-            console.log(action);
+            return newTodos
+        }
+
+        case "CHANGE_TITLE": {
+            const newTodos = state.map(todo => {
+                if (todo.id !== action.todo_id) return todo
+                return {
+                    ...todo,
+                    title: action.title
+                }
+            })
 
             return newTodos
         }

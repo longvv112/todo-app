@@ -1,3 +1,5 @@
+import { TodosService } from "../../services/todos"
+
 const getTodos = (todos) => {
     return {
         type: "GET_TODO",
@@ -27,9 +29,37 @@ const changeTodoCompleted = (todoId, isCompleted) => {
     }
 }
 
+const changeTodoTitle = (todoId, title) => {
+    return {
+        type: "CHANGE_TITLE",
+        todo_id: todoId,
+        title: title
+    }
+}
+
+const getTodosAsync = () => {
+    return (dispatch, getState) => {
+        // console.log("state: ", getState());
+
+        return TodosService.getTodosList().then((todos) => {
+            dispatch(getTodos(todos))
+        })
+    }
+}
+
+const changeTodoTitleAsync = (todoId, title) => {
+    return dispatch => {
+        return TodosService.changeTitle(todoId, title).then((todoUpdated) => {
+            dispatch(changeTodoTitle(todoId, todoUpdated.title))
+        })
+    }
+}
+
 export const TodosActions = {
     getTodos,
     addTodo,
     removeTodo,
-    changeTodoCompleted
+    changeTodoCompleted,
+    getTodosAsync,
+    changeTodoTitleAsync
 }
